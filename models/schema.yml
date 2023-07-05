@@ -1,0 +1,65 @@
+version: 2
+
+sources:
+  - name: dbt_cdr
+    tables:
+      - name: src1
+      - name: src2
+
+models:
+  - name: tab3
+    description: "TAB3 description"
+    columns:
+      - name: id_row
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: tab4
+    description: "TAB4 description"
+    columns:
+      - name: id_row
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('tab3')
+              field: id_row
+
+  - name: tab5
+    description: "TAB5 description"
+    columns:
+      - name: id_row
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: tab6
+    description: "TAB6 description"
+    columns:
+      - name: id_row
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: tab7
+    description: "TAB7 description"
+    columns:
+      - name: id_row
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: tab8
+    description: "TAB8 description"
+    columns:
+      - name: id_row
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
