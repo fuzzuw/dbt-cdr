@@ -2,3 +2,7 @@
 target/
 dbt_packages/
 logs/
+database.ini
+__pycache__
+.ipynb_checkpoints
+drafts
