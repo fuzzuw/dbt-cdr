@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import argparse
 import psycopg2
 from config import config
