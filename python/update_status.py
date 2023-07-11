@@ -20,8 +20,11 @@ def main():
         str_models = '(\''+delimiter.join(res.result)+'\')'
         #sql2 = f'SELECT status FROM dbt_cdr.statuses WHERE model_name in {str_models}'
         sql = f'''UPDATE dbt_cdr.statuses
-                  SET status = case when status=0 then 1 else status end,
-                      status_after = case when status=2 then 1 else status_after end
+                  SET status = case when status='NORMAL' then 'OUTDATED'
+                                    when status='REFRESHING' then 'REFRESHING_OUTDATED'
+                                    when status is NULL then 'OUTDATED'
+                                    else status 
+                                    end
                   WHERE model_name in {str_models}'''
         #print(sql)
 
