@@ -11,7 +11,10 @@ def main():
     with closing(psycopg2.connect(**params)) as conn:
         with conn.cursor() as cur:
 
-            sql = 'UPDATE dbt_cdr.statuses SET status=2 WHERE status = 1 RETURNING model_name'
+            sql = '''UPDATE dbt_cdr.statuses
+                     SET status = 'REFRESHING'
+                     WHERE status = 'OUTDATED'
+                     RETURNING model_name'''
             #print(sql)
             cur.execute(sql)
             models = cur.fetchall()
@@ -34,8 +37,9 @@ def main():
                 delimiter = '\', \''
                 str_models = '(\''+delimiter.join(models)+'\')'
                 sql = f'''UPDATE dbt_cdr.statuses
-                          SET status = COALESCE(status_after,0), 
-                              status_after = null
+                          SET status = case when status='REFRESHING_OUTDATED' then 'OUTDATED'
+                                            else 'NORMAL' 
+                                            end
                           WHERE model_name in {str_models}'''
                 
                 cur.execute(sql)
