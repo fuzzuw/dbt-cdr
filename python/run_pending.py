@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import psycopg2
 from config import config
 from dbt.cli.main import dbtRunner, dbtRunnerResult
